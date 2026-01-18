@@ -1,0 +1,4 @@
+node_id,site_type,latitude,longitude,timestamp_utc,waste_ton_h,CO2_kg_MWh,NOx_mg_Nm3,PM_mg_Nm3,HCl_mg_Nm3,dioxin_ng_Nm3,ecoimpact_score,within_WHO_corridor,within_legal_ELV,karmaper_ton,notes
+PHX-CYBO-PRISON-01,Prison,33.4484,-112.0740,2026-01-17T00:00:00Z,2.5,380,120,4,2,0.01,0.88,true,true,0.72,"Night load; all pollutants < WHO-derived targets."
+PHX-CYBO-MRF-02,MRF,33.4500,-112.0700,2026-01-17T00:00:00Z,3.0,395,135,5,3,0.02,0.86,true,true,0.69,"Mixed MSW with high paper fraction; scrubber duty elevated."
+PHX-CYBO-PRISON-01,Prison,33.4484,-112.0740,2026-01-16T00:00:00Z,2.0,370,110,3,2,0.01,0.90,true,true,0.75,"Day load; best-performance reference corridor cell."
