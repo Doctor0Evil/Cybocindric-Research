@@ -1,0 +1,7 @@
+CONTRACT LcaDeploymentGate
+  INPUT GWP_base : REAL;
+  INPUT GWP_cybo : REAL;
+
+  INVARIANT PrimaryLca:
+    GWP_cybo < GWP_base;
+END;
