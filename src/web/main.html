@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybocindric Furnace Safety and Environmental Compliance Research</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(140, 70%, 95%)',
+              100: 'hsl(140, 70%, 85%)',
+              200: 'hsl(140, 70%, 75%)',
+              300: 'hsl(140, 70%, 65%)',
+              400: 'hsl(140, 70%, 55%)',
+              500: 'hsl(140, 70%, 40%)',
+              600: 'hsl(140, 70%, 35%)',
+              700: 'hsl(140, 70%, 25%)',
+              800: 'hsl(140, 70%, 15%)',
+              900: 'hsl(140, 70%, 10%)'
+            },
+            accent: {
+              50: 'hsl(170, 65%, 95%)',
+              100: 'hsl(170, 65%, 85%)',
+              200: 'hsl(170, 65%, 75%)',
+              300: 'hsl(170, 65%, 65%)',
+              400: 'hsl(170, 65%, 60%)',
+              500: 'hsl(170, 65%, 55%)',
+              600: 'hsl(170, 65%, 50%)',
+              700: 'hsl(170, 65%, 40%)',
+              800: 'hsl(170, 65%, 30%)',
+              900: 'hsl(170, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(140, 70%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(170, 65%, var(--border-lightness));
+    }
+
+    .dark .card-interactive:hover {
+      filter: brightness(1.05);
+    }
+  </style>
+
+  <!-- Dark Mode Toggle Script -->
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Progress Bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar" style="width: 0%;"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Cybocindric Furnace Research</h1>
+        
+        <div class="flex items-center space-x-4">
+          <a href="#home" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Home</a>
+          <a href="#safety" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Safety</a>
+          <a href="#lca" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">LCA</a>
+          <a href="#regulations" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Regulations</a>
+          <a href="#monitoring" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Monitoring</a>
+          <a href="#deployment" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Deployment</a>
+          <a href="#conclusion" class="btn-interactive px-3 py-2 rounded-lg text-sm font-medium text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-all">Conclusion</a>
+          
+          <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 transition-all">
+            <i data-lucide="sun" id="sunIcon" class="w-5 h-5" style="display: none;"></i>
+            <i data-lucide="moon" id="moonIcon" class="w-5 h-5" style="display: block;"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-16">
+    <!-- Hero Section -->
+    <section id="home" class="py-20 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-primary-700 dark:text-primary-300">
+            Mathematically Hardened Cybocindric Furnace Safety Systems
+          </h2>
+          <p class="text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto">
+            Advancing waste-to-energy technology through formal safety constraints, ecological compliance, and verifiable control systems for deployment in prisons and recycling facilities
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center mt-12">
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+              Waste-to-energy (WtE) technologies convert municipal solid waste (MSW) into energy through processes like incineration, gasification, and pyrolysis, offering a solution to both waste management and energy generation challenges.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Key Finding: Life cycle assessment (LCA) studies demonstrate that WtE systems can reduce greenhouse gas emissions by 0.2-0.8 kg CO₂-eq/kWh compared to fossil fuel alternatives.
+              </p>
+            </div>
+
+            <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2071-1050/13/10/5467|3">
+              Modern WtE systems integrate advanced air pollution control technologies to mitigate emissions of particulate matter, heavy metals, and dioxins, ensuring compliance with stringent environmental standards.
+            </p>
+          </div>
+          
+          <img
+            src="https://cdn.qwenlm.ai/714a88f7-e42b-4a6c-80c2-00f9eddec4c0/8e0ef6b0-398d-4bde-8008-c6350bc0b58a/f24dcae2-5981-4c91-9dcc-63905e9fe77c.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiNzE0YTg4ZjctZTQyYi00YTZjLTgwYzItMDBmOWVkZGVjNGMwIiwicmVzb3VyY2VfaWQiOiI4ZTBlZjZiMC0zOThkLTRiZGUtODAwOC1jNjM1MGJjMGI1OGEiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.4NZ_TWZx61HQys9rlhnIo2JbvjV1TMz08GA_UhgNgak"
+            alt="Technical illustration of a waste-to-energy incineration plant facility with a prominent cylindrical furnace structure in the center. The furnace is rendered in metallic silver-gray color with visible heat-resistant insulation panels in dark gray. Three tall smokestacks rise from the facility roof, each painted in alternating red and white bands for safety visibility. Surrounding the main building are multiple rectangular air pollution control units in blue-green color with visible ductwork connections in metallic silver. A large conveyor belt system in dark gray transports municipal solid waste from the left side toward the furnace intake. The facility is situated on a concrete foundation with green grass areas and trees in the background. Clear sky with scattered white clouds overhead. The scene emphasizes industrial engineering precision with clean lines and organized equipment layout, representing modern environmental compliance standards."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Mathematical Safety Corridors Section -->
+    <section id="safety" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Mathematical Hardening of Safety Corridors
+        </h2>
+
+        <div class="space-y-8">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+              Temperature Control Systems
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Modern waste-to-energy incineration systems employ advanced temperature control mechanisms to ensure efficient combustion and minimize harmful emissions. The combustion chamber maintains temperatures between <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">850-1,100°C</span>, with flue gas temperatures reaching up to <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1,300°C</span>.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              These elevated temperatures are crucial for the complete destruction of organic compounds and pathogens, ensuring effective waste treatment while maintaining operational safety through precise temperature monitoring and control systems.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://www.sciencedirect.com/science/article/pii/S0956053X22002347|4">
+              Residence Time Optimization
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              The optimal residence time for pyrolysis processes ranges from <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">15-60 minutes</span>, depending on the feedstock composition and desired product yield. Longer residence times generally favor char production, while shorter times favor gas and liquid yields.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              For fluidized bed pyrolysis reactors, the gas residence time is typically maintained between <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">2-10 seconds</span> to ensure complete devolatilization and prevent tar formation, while maintaining optimal heat transfer and mixing.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+              Air Ratio Management
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              The air-to-fuel ratio in waste-to-energy systems is carefully controlled to optimize combustion efficiency and minimize emissions. The stoichiometric air requirement varies based on waste composition, but typical values range from <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1.5-2.0</span> for municipal solid waste incineration.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              Excess air levels are maintained between <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">10-25%</span> to ensure complete combustion while avoiding excessive nitrogen oxide formation. Advanced control systems continuously monitor oxygen levels in the flue gas to maintain optimal combustion conditions.
+            </p>
+          </div>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.sciencedirect.com/science/article/pii/S0956053X22002347|4">
+              <i data-lucide="shield-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Safety Feature: Mathematical models incorporating mass balance equations, energy conservation principles, and kinetic reaction rates are used to predict and control the behavior of pyrolysis systems, ensuring stable operation within safe parameter bounds.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Life Cycle Assessment Section -->
+    <section id="lca" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          Life Cycle Assessment and Environmental Impact
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+              Greenhouse Gas Reduction
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Life cycle assessment studies demonstrate that waste-to-energy systems can achieve greenhouse gas emission reductions ranging from <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">0.2-0.8 kg CO₂-eq/kWh</span> compared to fossil fuel alternatives.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              These reductions are primarily attributed to avoided methane emissions from landfills and displacement of fossil fuel-based electricity generation, making WtE a valuable component of climate change mitigation strategies.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.mdpi.com/2071-1050/13/10/5467|3">
+              Resource Recovery Benefits
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Waste-to-energy facilities recover valuable resources including ferrous and non-ferrous metals from the ash residue, with metal recovery rates typically exceeding <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">95%</span> for ferrous metals.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              The recovered metals can be reintroduced into the manufacturing supply chain, contributing to circular economy principles and reducing the demand for virgin material extraction.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-lca-1">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="activity" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Comparative LCA Studies</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-lca-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-lca-1">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  Comparative LCA studies indicate that waste-to-energy systems generally exhibit lower environmental impacts than landfilling across multiple impact categories, including global warming potential, acidification potential, and eutrophication potential.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2071-1050/13/10/5467|3">
+                  The environmental performance of WtE systems varies significantly based on plant design, waste composition, and local energy mix, emphasizing the importance of site-specific assessments for optimal environmental outcomes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-lca-2">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="zap" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Energy Efficiency Metrics</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-lca-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-lca-2">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Modern waste-to-energy plants achieve electrical efficiencies of <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">25-30%</span> and overall energy efficiencies of <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">70-80%</span> through combined heat and power generation.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2071-1050/13/10/5467|3">
+                  Heat recovery systems capture thermal energy from the combustion process, utilizing it for district heating networks or industrial processes, thereby maximizing the overall energy utilization of the waste feedstock.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-accent-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-lca-3">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="droplet" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Water Usage and Management</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-lca-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-lca-3">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Water consumption in waste-to-energy plants is primarily for steam generation, cooling systems, and air pollution control, with typical usage rates of <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">2-4 m³/MWh</span> of electricity generated.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.mdpi.com/2071-1050/13/10/5467|3">
+                  Advanced water treatment systems ensure that wastewater discharges meet regulatory standards, with treatment processes removing heavy metals, organic compounds, and suspended solids before release or reuse within the facility.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+            <i data-lucide="triangle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Environmental Trade-offs: While WtE systems reduce greenhouse gas emissions, they can generate secondary pollutants such as nitrogen oxides, sulfur dioxide, and particulate matter, requiring advanced air pollution control systems to minimize environmental impacts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Regulatory Compliance Section -->
+    <section id="regulations" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Regulatory Framework and Environmental Standards
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">EU Directives</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              The EU Industrial Emissions Directive (2010/75/EU) establishes emission limit values for waste-to-energy plants, including <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">0.1 ng I-TEQ/Nm³</span> for dioxins and furans.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="globe" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.who.int/publications/i/item/9789240034228|10">WHO Guidelines</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              WHO Air Quality Guidelines recommend <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">5 µg/m³</span> annual PM2.5 concentrations and <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">10 µg/m³</span> for PM10 to protect public health.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <i data-lucide="shield" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300" data-ref="https://www.epa.gov/landfillmethane/basic-information-about-landfill-gas|12">US EPA Standards</h3>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+              US EPA Landfill Methane Outreach Program (LMOP) promotes landfill gas energy projects, with over <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">500</span> operational projects generating <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">15.7 TWh</span> annually.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-reg-1">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="flame" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Combustion Regulations</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-reg-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-reg-1">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  The EU Industrial Emissions Directive (2010/75/EU) establishes stringent emission limit values for waste-to-energy plants, including <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">0.1 ng I-TEQ/Nm³</span> for dioxins and furans, <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">10 mg/Nm³</span> for particulate matter, and <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">200 mg/Nm³</span> for sulfur dioxide.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  The US EPA's New Source Performance Standards (NSPS) for municipal waste combustors establish emission limits including <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">0.18 ng TEQ/m³</span> for dioxins and furans, <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">18 mg/dscm</span> for particulate matter, and <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">52 ppmv</span> for carbon monoxide.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-reg-2">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="clipboard-check" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Monitoring Requirements</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-reg-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-reg-2">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  Continuous emission monitoring systems (CEMS) are required for major pollutants including particulate matter, sulfur dioxide, nitrogen oxides, and carbon monoxide, with data reporting frequencies typically every <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">15 minutes</span> to <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1 hour</span>.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Periodic monitoring of trace pollutants including dioxins, furans, and heavy metals is required, typically conducted on a quarterly basis with additional testing during plant startup, shutdown, and maintenance periods.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-reg-3">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="file-check" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Permitting Process</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-reg-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-reg-3">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Environmental permitting for waste-to-energy facilities typically requires comprehensive environmental impact assessments, public consultation processes, and detailed technical documentation demonstrating compliance with all applicable regulations.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  The permitting process may take <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">2-5 years</span> depending on jurisdiction and project complexity, involving multiple regulatory agencies and public participation requirements.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monitoring and Control Systems Section -->
+    <section id="monitoring" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          Real-time Monitoring and Control Systems
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
+          <div class="space-y-6">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                Gas Monitoring Technologies
+              </h3>
+              <p class="text-gray-700 dark:text-gray-300 mb-4">
+                Continuous emission monitoring systems utilize advanced analytical techniques including Fourier Transform Infrared Spectroscopy (FTIR), Ultraviolet Differential Optical Absorption Spectroscopy (UV-DOAS), and chemiluminescence detectors to measure concentrations of <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">CO₂</span>, <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">SO₂</span>, <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">NOₓ</span>, and <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">CO</span> in real-time.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300">
+                These systems provide automated data logging, alarm functions, and remote monitoring capabilities, ensuring continuous compliance with emission standards and rapid response to operational anomalies.
+              </p>
+            </div>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                <i data-lucide="circle-alert" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Critical Monitoring: Advanced particulate matter monitoring systems using laser scattering, beta attenuation, or gravimetric methods ensure compliance with stringent PM emission limits, with detection limits as low as <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">0.1 mg/m³</span>.
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                Automated Control Systems
+              </h3>
+              <p class="text-gray-700 dark:text-gray-300 mb-4">
+                Distributed control systems (DCS) and programmable logic controllers (PLCs) automate critical process parameters including combustion temperature, air flow rates, and fuel feeding systems, optimizing performance while maintaining safety margins.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300">
+                These systems integrate with supervisory control and data acquisition (SCADA) platforms, enabling centralized monitoring, predictive maintenance scheduling, and real-time optimization algorithms to maximize energy efficiency and minimize environmental impact.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                Data Management and Reporting
+              </h3>
+              <p class="text-gray-700 dark:text-gray-300 mb-4">
+                Modern monitoring systems collect and store vast amounts of operational and environmental data, with typical facilities generating <span class="mx-1 px-1.5 py-0.5 rounded-md bg-accent-100 dark:bg-accent-900/30 text-accent-800 dark:text-accent-300 font-semibold text-sm">100,000+</span> data points per day across hundreds of monitored parameters.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300">
+                Automated reporting systems compile regulatory compliance reports, trend analysis, and performance metrics, facilitating data-driven decision-making and ensuring transparency with regulatory authorities and stakeholders.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+          <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+            Advanced Process Control Strategies
+          </h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Model Predictive Control</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Model predictive control (MPC) algorithms optimize combustion processes by predicting future system behavior and adjusting control inputs accordingly, improving efficiency while maintaining emission compliance through anticipatory adjustments.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-semibold text-accent-700 dark:text-accent-300 mb-2">Artificial Intelligence Integration</h4>
+              <p class="text-sm text-gray-700 dark:text-gray-300">
+                Machine learning algorithms analyze historical operational data to identify optimal operating conditions, predict maintenance needs, and detect early signs of equipment degradation, enhancing overall system reliability and performance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deployment Considerations Section -->
+    <section id="deployment" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Deployment Strategies and Site-Specific Considerations
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+              Site Selection Criteria
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Optimal site selection for waste-to-energy facilities considers factors including proximity to waste sources (<span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">&lt;50 km</span>), transportation infrastructure, grid connectivity, and environmental sensitivity of surrounding areas.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              Population density considerations typically require facilities to be located at least <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1-2 km</span> from residential areas, with buffer zones extending up to <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">5 km</span> in sensitive locations.
+            </p>
+          </div>
+
+          <div class="card-interactive p-6 bg-primary-50/50 dark:bg-gray-800 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+              Capacity Planning
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              Waste-to-energy plant capacities typically range from <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">50-1,000 tons/day</span>, with larger facilities achieving economies of scale and improved operational efficiency.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300">
+              Optimal capacity selection depends on local waste generation rates, future growth projections, and integration with existing waste management infrastructure, typically designed to operate at <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">85-95%</span> of rated capacity for maximum efficiency.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-deploy-1">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="building" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Prison Facility Integration</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-deploy-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-deploy-1">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Prison facilities present unique opportunities for waste-to-energy integration due to their consistent waste streams and energy demands. Small-scale incineration systems can process <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">10-50 tons/day</span> of mixed waste while providing heat for heating, hot water, and steam generation.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  Integrated systems can achieve energy self-sufficiency for prison operations, with excess electricity sold to the grid or stored in battery systems, reducing operational costs and environmental footprint while maintaining security protocols.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-deploy-2">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="recycle" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Recycling Plant Integration</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-deploy-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-deploy-2">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Recycling plants can integrate waste-to-energy systems to process non-recyclable residues and contaminated materials, converting them into energy while reducing landfill disposal requirements. Typical integration scenarios handle <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">5-50 tons/day</span> of residual waste.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  Combined recycling and energy recovery operations can achieve overall waste diversion rates exceeding <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">95%</span>, with energy recovery rates of <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">500-800 kWh/ton</span> of processed waste.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-deploy-3">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="layers" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Modular and Scalable Solutions</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-deploy-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-deploy-3">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  Modular waste-to-energy systems enable scalable deployment, starting with small-scale units (<span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1-10 tons/day</span>) and expanding incrementally as waste volumes grow or energy demands increase.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  Prefabricated modules can be manufactured off-site and assembled quickly, reducing construction time by <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">30-50%</span> compared to traditional construction methods, while maintaining high standards of safety and environmental compliance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+          <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+            <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+            Success Factor: Community engagement and stakeholder consultation are critical for successful deployment, with transparent communication about environmental benefits, safety measures, and economic advantages helping to build public acceptance and support for waste-to-energy projects.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Conclusion and Future Directions
+        </h2>
+
+        <div class="space-y-6">
+          <p class="text-lg text-gray-700 dark:text-gray-300" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+            The development of mathematically hardened safety corridors, verifiable invariants, and integrity-enforced telemetry systems for cybocindric furnaces represents a significant advancement in waste-to-energy technology. These systems ensure safe, efficient, and environmentally compliant operation while minimizing residual risk-of-harm in sensitive deployment environments such as prisons and recycling facilities.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-3">Key Achievements</h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Implementation of formal safety constraints governing temperature, air ratio, residence time, and pollutant indices</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Development of Lyapunov-style residual monitoring for real-time safety corridor validation</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Integration of mass-energy conservation kernels for operational boundary verification</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Establishment of verifiable invariants for ecological health and energy efficiency optimization</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-900 rounded-xl shadow-md">
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-3">Future Research Priorities</h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Advanced AI-driven predictive maintenance systems for extended operational reliability</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Integration of blockchain-based telemetry integrity verification for enhanced cybersecurity</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Development of standardized deployment frameworks for diverse institutional settings</span>
+                </li>
+                <li class="flex items-start" data-ref="https://www.sciencedirect.com/science/article/pii/S0959652618310249|2">
+                  <i data-lucide="arrow-right" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Long-term environmental impact assessment studies for regulatory harmonization</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+            <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.researchgate.net/publication/332244473_A_review_of_waste-to-energy_technologies_and_their_environmental_impacts|1">
+              <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+              Final Note: The mathematical hardening of safety corridors through formal verification methods, combined with real-time environmental monitoring and adaptive control systems, positions cybocindric furnaces as a robust solution for sustainable waste-to-energy conversion in institutional settings while meeting the most stringent safety and environmental standards.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-gray-300 py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">About This Research</h3>
+          <p class="text-sm text-gray-400">
+            Comprehensive analysis of mathematically hardened safety systems for cybocindric furnaces in waste-to-energy applications, emphasizing formal verification and environmental compliance.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Key Topics</h3>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Safety Corridor Hardening</li>
+            <li>Life Cycle Assessment</li>
+            <li>Regulatory Compliance</li>
+            <li>Real-time Monitoring</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-primary-300 dark:text-primary-400 mb-4">Research Focus</h3>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Prison Facility Deployment</li>
+            <li>Recycling Plant Integration</li>
+            <li>Environmental Health Protection</li>
+            <li>Energy Efficiency Optimization</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-primary-800 dark:border-gray-800 pt-8 text-center text-sm text-gray-500">
+        <p>&copy; 2024 Cybocindric Furnace Research. Educational resource for waste-to-energy safety systems.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Initialize Libraries -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Initialize AOS animations
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+      });
+
+      // Initialize Preline components
+      setTimeout(() => {
+        window.HSStaticMethods.autoInit();
+      }, 100);
+
+      // Initialize citation system
+      initCitationSystem();
+
+      // Progress bar functionality
+      const progressBar = document.getElementById('progressBar');
+      
+      function updateProgressBar() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+      }
+
+      window.addEventListener('scroll', updateProgressBar);
+      updateProgressBar();
+    });
+  </script>
+</body>
+</html>
