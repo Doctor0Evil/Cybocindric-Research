@@ -1,0 +1,11 @@
+CONTRACT CybocinderLyapunov
+  INPUT r_x[NUM_CHANNELS] : REAL;
+  INPUT w[NUM_CHANNELS]   : REAL;
+  INPUT V_prev            : REAL;
+  OUTPUT V_next           : REAL;
+
+  LET V_next = SUM(i IN 0..NUM_CHANNELS-1) ( w[i] * r_x[i] );
+
+  INVARIANT NonIncreasingResidual:
+    V_next <= V_prev + EPS;
+END;
