@@ -1,0 +1,4 @@
+node_id,scope,region,risk_of_harm,has_math_corridors,has_pilot_gates,sensor_uncertainty_bounded,ci_invariants_enforced,governance_constraints_encoded,notes
+PHX-CYBO-PRISON-01,cybocindric_furnace,Phoenix-AZ,0.20,false,false,false,false,false,"Baseline WtE concept before ALN contracts and hard corridors."
+PHX-CYBO-PRISON-01,cybocindric_furnace,Phoenix-AZ,0.13,true,true,true,true,true,"After Lyapunov-style risk residuals, pilot gates, sensor bounds, CI, and ALN governance invariants."
+PHX-CYBO-MRF-02,cybocindric_furnace,Phoenix-AZ,0.12,true,true,true,true,true,"MRF installation with additional LCA siting filters and dual-threshold health corridors."
