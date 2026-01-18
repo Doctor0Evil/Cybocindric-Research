@@ -1,0 +1,6 @@
+pollutant,threshold_legal_mgNm3,threshold_health_mgNm3,avg_emission_pilot,uncertainty_bound,eco_impact_reduction
+NOx,200,150,120,0.05,0.15
+SOx,50,30,25,0.04,0.18
+PM,10,5,4,0.03,0.20
+Dioxins,0.1,0.05,0.03,0.02,0.22
+HCl,10,8,6,0.04,0.17
