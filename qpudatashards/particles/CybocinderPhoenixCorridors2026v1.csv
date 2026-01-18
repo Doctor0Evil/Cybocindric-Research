@@ -1,0 +1,10 @@
+nodeid,parameter,unit,legal_limit,who_gold,weight_w,ker_role,lyap_channel,ecoimpactscore,notes
+PHX-CYBO-NOX,NOx,mg/Nm3,150,40,0.22,health,0,0.92,EU IED+US CAA legal vs WHO AQG 2021 aligned targets
+PHX-CYBO-PM25,PM2.5,mg/Nm3,10,5,0.20,health,1,0.95,Mass particulate corridor anchored to PM2.5 AQG
+PHX-CYBO-PCDD,Dioxins,ng I-TEQ/Nm3,0.1,0.0001,0.18,health,2,0.98,IED 0.1 ng I-TEQ/Nm3 vs 100 fg/m3 ambient-equivalent gold
+PHX-CYBO-CO,CO,mg/Nm3,50,10,0.10,process,3,0.88,CO as combustion quality/health proxy with WHO 24 h guidance
+PHX-CYBO-SO2,SO2,mg/Nm3,200,20,0.08,health,4,0.86,Legal stack limit vs WHO guideline
+PHX-CYBO-HCL,HCl,mg/Nm3,10,5,0.05,process,5,0.80,Acid gas group control corridor
+PHX-CYBO-TEMP,FurnaceTemp,°C,1200,850,0.07,safety,6,0.90,Min temperature/residence-time surrogate corridor
+PHX-CYBO-O2,O2,vol%,15,6,0.05,process,7,0.84,Excess air corridor for complete combustion
+PHX-CYBO-RT,ResidenceTime,s,2.0,>2.0,0.05,safety,8,0.93,Gas residence in post-combustion zone
