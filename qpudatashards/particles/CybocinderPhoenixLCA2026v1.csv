@@ -1,0 +1,4 @@
+scenarioid,region,grid_intensity_gco2_kwh,recycling_rate_frac,tech,func_unit,GWP_kgco2eq,ecoimpactscore
+PHX-BASE-2026,Phoenix,420,0.25,Landfill,1_ton_MSW,480,0.72
+PHX-CYBO-2026,Phoenix,420,0.25,Cybocinder,1_ton_MSW,320,0.91
+PHX-LOWCARB-2030,Phoenix,150,0.40,Cybocinder,1_ton_MSW,210,0.95
