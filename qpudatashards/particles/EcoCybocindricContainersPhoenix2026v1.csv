@@ -1,0 +1,7 @@
+destination-path,module,version,role
+qpudatashards/particles/EcoCybocindricContainersPhoenix2026v1.csv,EcoCybocindricContainersPhoenix,1.0.0,TrayLineNode
+
+nodeid,facility,region,materialstack,producttype,dt_days,tray_mass_kg,throughput_trays_per_day,E_line_kWh_per_kg,E_furnace_kWh_per_kg,grid_kgCO2_per_kWh,fuel_kgCO2_per_kWh,M_CO2_kg_per_kg,M_NOx_g_per_kg,M_PM_g_per_kg,compostable_flag,pfas_free_flag,emission_corridor_ok,ecoimpactscore,karmaperunit,hex_stamp,notes
+PHX-CYBO-TRAY-01,PhxCommissary-A1,Phoenix-AZ-US,BAGASSE-STARCH-PHX-v1,TV-Dinner-Tray,1,0.022,50000,0.45,0.12,0.35,0.25,0.210,0.45,0.08,true,true,true,0.89,6.7e5,0xa1b2c3d4e5f67890,"Baseline production day with bagasse-starch furnish; kWh/kg, CO2/NOx/PM from live meters and CEIM kernels."
+PHX-CYBO-TRAY-02,PhxCommissary-A1,Phoenix-AZ-US,WHEAT-STRAW-PULP-PHX-v1,TV-Dinner-Tray,1,0.023,52000,0.41,0.10,0.35,0.25,0.195,0.42,0.07,true,true,true,0.91,7.2e5,0x1122334455667788,"Optimized dryer profile; lower E_line and furnace load, all tests and corridors passed."
+PHX-CYBO-TRAY-03,PhxCommissary-A1,Phoenix-AZ-US,PS-THERMOFORM-LEGACY,TV-Dinner-Tray,1,0.030,50000,1.20,0.00,0.35,0.25,0.420,0.90,0.20,false,false,false,0.10,0.0,0x99aabbccddeeff00,"Legacy plastic line; recorded as comparison baseline only, ineligible for eco-positive routing."
